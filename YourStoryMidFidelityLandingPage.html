@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Story – Storytelling Platform</title>
+  <meta name="description" content="A parent-powered storytelling platform designed to nurture imagination and early literacy in young readers." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b0c10;
+      --ink: #111827;     /* gray-900 */
+      --muted: #4b5563;   /* gray-600 */
+      --line: #e5e7eb;    /* gray-200 */
+      --brand: #5b7cff;   /* indigo-500-ish */
+      --brand-dark: #3f5ce6; 
+      --cream: #fffdf8;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body { margin: 0; }
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--ink);
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    /* Layout helpers */
+    .container{ width: min(1100px, 92%); margin-inline: auto; }
+    .stack{ display: grid; gap: 1rem; }
+    .stack-lg{ display: grid; gap: 2rem; }
+
+    /* Header */
+    header{
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: saturate(180%) blur(8px);
+      background: rgba(255,255,255,.85);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav{ display: flex; align-items: center; justify-content: space-between; padding: .9rem 0; }
+    .brand{ display:flex; align-items:center; gap:.6rem; font-weight:700; letter-spacing:.2px; }
+    .brand .logo{ width: 28px; height: 28px; border-radius:8px; background: var(--brand); display:grid; place-items:center; color:white; font-weight:900; }
+    nav ul{ list-style:none; display:flex; gap:1.2rem; padding:0; margin:0; }
+    nav a{ text-decoration:none; color: var(--muted); font-weight:500; }
+    nav a:hover{ color: var(--ink); }
+    .actions{ display:flex; align-items:center; gap:.75rem; }
+    .btn{ appearance:none; border:1px solid var(--line); background:white; color:var(--ink); padding:.6rem .9rem; border-radius:999px; font-weight:600; cursor:pointer; }
+    .btn-primary{ background:var(--brand); color:white; border-color:transparent; }
+    .btn-primary:hover{ background:var(--brand-dark); }
+
+    /* Mobile nav */
+    .menu-toggle{ display:none; border:none; background:transparent; font-size:1.25rem; }
+    @media (max-width: 860px){
+      nav{ display:none; }
+      .menu-toggle{ display:block; }
+      .drawer{ position: fixed; inset: 64px 0 auto 0; background:white; border-top:1px solid var(--line); display:none; }
+      .drawer.open{ display:block; }
+      .drawer ul{ list-style:none; margin:0; padding: 1rem; }
+      .drawer a{ display:block; padding:.8rem 0; color:var(--ink); text-decoration:none; }
+    }
+
+    /* Hero */
+    .hero{
+      position: relative; isolation:isolate; overflow:hidden;
+      background: #0e1116;
+      color: white;
+    }
+    .hero__media{
+      position:absolute; inset:0; z-index:-1; opacity:.55; background-position:center; background-size:cover;
+      background-image:url('https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=2000&auto=format&fit=crop');
+    }
+    .hero .container{ padding: clamp(3rem, 6vw, 6rem) 0; display:grid; gap:1.25rem; justify-items:center; text-align:center; }
+    .eyebrow{ font-size:.9rem; letter-spacing:.12em; text-transform:uppercase; color: #e5e7eb; }
+    .hero h1{ font-family: Merriweather, Georgia, serif; font-weight:900; font-size: clamp(2.2rem, 5vw, 3.2rem); line-height:1.15; margin: .25rem 0; }
+    .hero p{ max-width: 60ch; color: #e8e9ec; }
+    .hero .cta{ display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; }
+
+    /* Features */
+    .features{ padding: clamp(2.5rem, 5vw, 4rem) 0; background:#fafafa; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .features__grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 1.25rem; align-items:start; }
+    .features__lead{ grid-column: span 12; }
+    .features__list{ grid-column: span 12; display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem; }
+    @media (min-width: 900px){
+      .features__lead{ grid-column: span 4; }
+      .features__list{ grid-column: span 8; }
+    }
+    .feature{
+      display:grid; grid-template-columns: auto 1fr; gap:.9rem; padding:1rem; background:white; border:1px solid var(--line); border-radius:16px;
+    }
+    .feature .icon{ width:42px; height:42px; border-radius:10px; display:grid; place-items:center; border:1px solid var(--line); }
+    .feature h3{ margin:0 0 .25rem 0; font-size:1.05rem; }
+    .feature p{ margin:0; color:var(--muted); font-size:.95rem; }
+
+    /* Showcase banner */
+    .showcase{ padding: clamp(2.5rem, 5vw, 4rem) 0; }
+    .marquee{ height: 280px; border:1px dashed var(--line); border-radius:20px; background:#f3f4f6; background-image: linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.7)), url('https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=2200&auto=format&fit=crop'); background-size:cover; background-position:center; }
+    @media (min-width: 900px){ .marquee{ height: 360px; } }
+
+    /* Newsletter */
+    .newsletter{ padding: clamp(2.5rem, 5vw, 4rem) 0; text-align:center; }
+    .newsletter h2{ margin:0 0 .25rem 0; }
+    .form{ display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; margin-top:.8rem; }
+    .input{ padding:.7rem .9rem; border:1px solid var(--line); border-radius:10px; min-width: 260px; }
+
+    /* Footer */
+    footer{ background:#f8f8f8; border-top:1px solid var(--line); padding:2rem 0; }
+    .footer-grid{ display:grid; gap:1.5rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .footer-col h4{ margin:.25rem 0 .5rem; font-size: .95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+    .footer-col ul{ list-style:none; padding:0; margin:0; display:grid; gap:.4rem; }
+    .footer-col a{ text-decoration:none; color:var(--ink); }
+    .footer-col a:hover{ text-decoration:underline; }
+
+    /* Utility */
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <a class="brand" href="#" aria-label="Your Story Home">
+        <span class="logo" aria-hidden="true">YS</span>
+        <span>Your Story</span>
+      </a>
+      <nav aria-label="Main">
+        <ul>
+          <li><a href="#browse">Browse Stories</a></li>
+          <li><a href="#how">How it Works</a></li>
+          <li><a href="#features">Plans & Access</a></li>
+          <li><a href="#tools">Parent Tools</a></li>
+        </ul>
+      </nav>
+      <div class="actions">
+        <button class="btn" type="button">Login</button>
+        <a class="btn btn-primary" href="#start">Start Reading</a>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+    <!-- Mobile drawer -->
+    <div class="drawer" id="drawer" aria-hidden="true">
+      <ul class="container">
+        <li><a href="#browse">Browse Stories</a></li>
+        <li><a href="#how">How it Works</a></li>
+        <li><a href="#features">Plans & Access</a></li>
+        <li><a href="#tools">Parent Tools</a></li>
+        <li><a href="#start">Start Reading</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="start">
+    <div class="hero__media" aria-hidden="true"></div>
+    <div class="container">
+      <p class="eyebrow">Story platform for families</p>
+      <h1>Your Story</h1>
+      <p>A parent‑powered storytelling platform designed to nurture imagination and early literacy in young readers.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#browse">Start Reading Together</a>
+        <a class="btn" href="#features">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="container features__grid">
+      <div class="features__lead">
+        <h2>Features</h2>
+        <p>Explore how our platform supports meaningful, personalized reading for children and parents. These blocks align to the mid‑fi mockup and can be swapped for product shots or illustrations later.</p>
+      </div>
+      <div class="features__list">
+        <article class="feature">
+          <div class="icon" aria-hidden="true">🔎</div>
+          <div>
+            <h3>Age‑Based Story Filtering</h3>
+            <p>Quickly find stories that match your child’s age and reading level—perfect for new or growing readers.</p>
+          </div>
+        </article>
+        <article class="feature">
+          <div class="icon" aria-hidden="true">🌐</div>
+          <div>
+            <h3>Multi‑Language Stories</h3>
+            <p>Read in multiple languages (including Spanish) to support bilingual families and early language exposure.</p>
+          </div>
+        </article>
+        <article class="feature">
+          <div class="icon" aria-hidden="true">⭐</div>
+          <div>
+            <h3>Personalize with Your Child’s Name</h3>
+            <p>Add your child’s name and a few details so every story feels like it was written just for them.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase banner (wide image) -->
+  <section class="showcase" aria-labelledby="showcase-title">
+    <div class="container stack">
+      <h2 id="showcase-title" class="sr-only">Platform showcase</h2>
+      <div class="marquee" role="img" aria-label="Large illustrative banner placeholder"></div>
+    </div>
+  </section>
+
+  <!-- Newsletter sign up -->
+  <section class="newsletter" aria-labelledby="news-title">
+    <div class="container">
+      <h2 id="news-title">Newsletter Sign Up</h2>
+      <p>Inspiration for storytime, straight to your inbox.</p>
+      <form class="form" action="#" method="post" onsubmit="event.preventDefault(); alert('Thanks! You\'re on the list.');">
+        <label class="sr-only" for="email">Email</label>
+        <input class="input" id="email" name="email" type="email" placeholder="you@example.com" required />
+        <button class="btn btn-primary" type="submit">Join the list</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="brand"><span class="logo" aria-hidden="true">YS</span><span>Your Story</span></div>
+        <p style="margin:.5rem 0 0; color:var(--muted)">Copyright © 2025 Your Story</p>
+      </div>
+      <div class="footer-col">
+        <h4>About Us</h4>
+        <ul>
+          <li><a href="#how">How it Works</a></li>
+          <li><a href="#features">Explore the Features</a></li>
+          <li><a href="#">What You Can Do</a></li>
+          <li><a href="#start">Getting Started</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">5 Ways to Personalize Storytime</a></li>
+          <li><a href="#">How Bilingual Reading Boosts Early Literacy</a></li>
+          <li><a href="#">Why Kids Love Seeing Themselves in Stories</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <ul>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">@yourstory • social</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const toggle = document.querySelector('.menu-toggle');
+    const drawer = document.getElementById('drawer');
+    toggle?.addEventListener('click', () => {
+      const open = drawer.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+      drawer.setAttribute('aria-hidden', String(!open));
+    });
+  </script>
+</body>
+</html>
